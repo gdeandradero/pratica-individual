@@ -3,6 +3,7 @@ package com.meli.springchallenge.controller;
 import com.meli.springchallenge.dto.FollowersCountDTO;
 import com.meli.springchallenge.dto.FollowersListDTO;
 import com.meli.springchallenge.dto.FollowingListDTO;
+import com.meli.springchallenge.models.Seller;
 import com.meli.springchallenge.models.User;
 import com.meli.springchallenge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +21,39 @@ public class UserController {
     /*
      * US 0000 - registerUser
      */
-    @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user){
-        User savedUser = userService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.OK).body(savedUser);
+    @PostMapping("/register/user")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void registerUser(@RequestBody User user){
+        userService.registerUser(user);
+    }
+
+    /*
+     * US 0000 - registerSeller
+     */
+    @PostMapping("/register/seller")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void registerSeller(@RequestBody Seller seller){
+        userService.registerSeller(seller);
     }
 
     /*
      * US 0001 - followUser
      */
     @PostMapping("/{userId}/follow/{userIdToFollow}")
-    public ResponseEntity<User> followUser(@PathVariable Long userId, @PathVariable Long userIdToFollow){
-        User user = userService.followUser(userId, userIdToFollow);
-        if (user.getId() == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(user);
+    public ResponseEntity<Void> followUser(@PathVariable Long userId, @PathVariable Long userIdToFollow){
+        boolean success = userService.followUser(userId, userIdToFollow);
+        if (success == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(user);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /*
      * US 0002 - followersCount
      */
-    @GetMapping("/{userId}/followers/count")
-    public ResponseEntity<FollowersCountDTO> followersCount(@PathVariable Long userId){
-        FollowersCountDTO followersCountDTO = userService.followersCount(userId);
+    @GetMapping("/{sellerId}/followers/count")
+    public ResponseEntity<FollowersCountDTO> followersCount(@PathVariable Long sellerId){
+        FollowersCountDTO followersCountDTO = userService.followersCount(sellerId);
         if (followersCountDTO.getId() == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followersCountDTO);
         }
@@ -53,9 +63,9 @@ public class UserController {
     /*
      * US 0003 - followersList
      */
-    @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<FollowersListDTO> followersList(@PathVariable Long userId){
-        FollowersListDTO followersListDTO = userService.followersList(userId);
+    @GetMapping("/{sellerId}/followers/list")
+    public ResponseEntity<FollowersListDTO> followersList(@PathVariable Long sellerId){
+        FollowersListDTO followersListDTO = userService.followersList(sellerId);
         if (followersListDTO.getId() == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followersListDTO);
         }
@@ -73,6 +83,5 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(followingListDTO);
     }
-
 
 }

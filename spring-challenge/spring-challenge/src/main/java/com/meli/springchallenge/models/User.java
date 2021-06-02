@@ -15,22 +15,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToMany
-    @JsonIgnore
-    private List<User> followersList;
+    /* @ManyToMany
+     @JsonIgnore
+     private List<User> followersList;*/
     @ManyToMany
     @JsonIgnore
     private List<User> followingList;
 
     public User(){
-        this.followersList = new ArrayList<>();
+        // this.followersList = new ArrayList<>();
         this.followingList = new ArrayList<>();
     }
 
-    public User(Long id, String name) {
-        this.id = id;
+    public User(String name) {
         this.name = name;
-        this.followersList = new ArrayList<>();
+        // this.followersList = new ArrayList<>();
         this.followingList = new ArrayList<>();
     }
 }
