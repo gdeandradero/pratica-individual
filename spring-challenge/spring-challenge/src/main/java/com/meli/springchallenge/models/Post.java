@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.Date;
 
 @Getter
@@ -14,15 +15,35 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Post {
+public class Post implements Comparable<Post> {
     private Long userId;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date date;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Product detail;
     private Long category;
     private Double price;
+
+    @Override
+    public int compareTo(Post o) {
+        /*
+         * this date before date argument
+         */
+        if (this.date.compareTo(o.date) < 0){
+            return 1;
+        }
+        /*
+         * this date after date argument
+         */
+        else if (this.date.compareTo(o.date) > 0){
+            return -1;
+        }
+        /*
+         * dates are equals
+         */
+        return 0;
+    }
 }

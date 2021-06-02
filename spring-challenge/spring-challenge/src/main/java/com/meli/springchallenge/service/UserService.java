@@ -11,6 +11,7 @@ public interface UserService {
     void registerSeller(Seller seller);
     boolean followUser(Long userId, Long userIdToFollow);
     FollowersCountDTO followersCount(Long sellerId);
-    FollowersListDTO followersList(Long sellerId);
-    FollowingListDTO followingList(Long userId);
+    FollowersListDTO followersList(Long sellerId, String order);
+    FollowingListDTO followingList(Long userId, String order);
+    boolean unfollowUser(Long userId, Long userIdToUnfollow);
 }

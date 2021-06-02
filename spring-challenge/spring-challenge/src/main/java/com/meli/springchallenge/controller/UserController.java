@@ -64,8 +64,9 @@ public class UserController {
      * US 0003 - followersList
      */
     @GetMapping("/{sellerId}/followers/list")
-    public ResponseEntity<FollowersListDTO> followersList(@PathVariable Long sellerId){
-        FollowersListDTO followersListDTO = userService.followersList(sellerId);
+    public ResponseEntity<FollowersListDTO> followersList(@PathVariable Long sellerId,
+                                                          @RequestParam(required = false) String order){
+        FollowersListDTO followersListDTO = userService.followersList(sellerId, order);
         if (followersListDTO.getId() == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followersListDTO);
         }
@@ -76,12 +77,24 @@ public class UserController {
      * US 0004 - followingList
      */
     @GetMapping("/{userId}/following/list")
-    public ResponseEntity<FollowingListDTO> followingList(@PathVariable Long userId){
-        FollowingListDTO followingListDTO = userService.followingList(userId);
+    public ResponseEntity<FollowingListDTO> followingList(@PathVariable Long userId,
+                                                          @RequestParam(required = false) String order){
+        FollowingListDTO followingListDTO = userService.followingList(userId, order);
         if (followingListDTO.getId() == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followingListDTO);
         }
         return ResponseEntity.status(HttpStatus.OK).body(followingListDTO);
     }
 
+    /*
+     * US 0007 - unfollowUser
+     */
+    @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<Void> unfollowUser(@PathVariable Long userId, @PathVariable Long userIdToUnfollow){
+        boolean success = userService.unfollowUser(userId, userIdToUnfollow);
+        if (success == false){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -1,7 +1,9 @@
 package com.meli.springchallenge.service;
 
+import com.meli.springchallenge.dto.FollowingPostsDTO;
 import com.meli.springchallenge.models.Post;
 
 public interface PostService {
-    Post registerPost(Post post);
+    boolean registerPost(Post post);
+    FollowingPostsDTO followingPosts(Long userId, String order);
 }

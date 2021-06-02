@@ -11,9 +11,7 @@ import com.meli.springchallenge.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,13 +23,16 @@ public class UserServiceImpl implements UserService {
     SellerRepository sellerRepository;
 
     /*
-     * US 0000
+     * US 0000 - registerUser
      */
     @Override
     public void registerUser(User user) {
         userRepository.save(user);
     }
 
+    /*
+     * US 0000 - registerSeller
+     */
     @Override
     public void registerSeller(Seller seller) {
         sellerRepository.save(seller);
@@ -45,16 +46,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean followUser(Long userId, Long userIdToFollow) {
         Optional<User> user = userRepository.findById(userId);
-        //Optional<User> userToFollow = userRepository.findById(userIdToFollow);
         Optional<Seller> sellerToFollow = sellerRepository.findById(userIdToFollow);
         if (user.isPresent() && sellerToFollow.isPresent()){
             /*
              * if the user already follows the userToFollow, return the user without changes
              */
-            if (user.get().getFollowingList().contains(sellerToFollow.get())){
-                //return user.get();
-                return false;
-            }
+            if (user.get().getFollowingList().contains(sellerToFollow.get())){ return false; }
             /*
              * add userToFollow to the followingList of the user
              * and add user to the followersList of the userToFollow
@@ -86,7 +83,7 @@ public class UserServiceImpl implements UserService {
      * US 0003 - followersList
      */
     @Override
-    public FollowersListDTO followersList(Long sellerId) {
+    public FollowersListDTO followersList(Long sellerId, String order) {
         Optional<Seller> seller = sellerRepository.findById(sellerId);
         if (seller.isPresent()){
             /*
@@ -102,6 +99,13 @@ public class UserServiceImpl implements UserService {
              */
             FollowersListDTO followersListDTO = new FollowersListDTO(seller.get().getId(), seller.get().getName(),
                     userDTOList);
+            if (order != null) {
+                if (order.toUpperCase().compareTo("NAME_ASC") == 0) {
+                    Collections.sort(followersListDTO.getFollowers());
+                } else if (order.toUpperCase().compareTo("NAME_DESC") == 0) {
+                    Collections.sort(followersListDTO.getFollowers(), Collections.reverseOrder());
+                }
+            }
             return followersListDTO;
         }
         return new FollowersListDTO();
@@ -111,7 +115,7 @@ public class UserServiceImpl implements UserService {
      * US 0004 - followingList
      */
     @Override
-    public FollowingListDTO followingList(Long userId) {
+    public FollowingListDTO followingList(Long userId, String order) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()){
             /*
@@ -127,8 +131,41 @@ public class UserServiceImpl implements UserService {
              */
             FollowingListDTO followingListDTO = new FollowingListDTO(user.get().getId(), user.get().getName(),
                     userDTOList);
+            if (order != null) {
+                if (order.toUpperCase().compareTo("NAME_ASC") == 0) {
+                    Collections.sort(followingListDTO.getFollowing());
+                } else if (order.toUpperCase().compareTo("NAME_DESC") == 0) {
+                    Collections.sort(followingListDTO.getFollowing(), Collections.reverseOrder());
+                }
+            }
             return followingListDTO;
         }
         return new FollowingListDTO();
+    }
+
+    /*
+     * US 0007 - unfollowUser
+     * return true if the seller has been unfollowed
+     */
+    @Override
+    public boolean unfollowUser(Long userId, Long userIdToUnfollow) {
+        Optional<User> user = userRepository.findById(userId);
+        Optional<Seller> sellerToUnfollow = sellerRepository.findById(userIdToUnfollow);
+        if (user.isPresent() && sellerToUnfollow.isPresent()){
+            /*
+             * if the user dont follow the userToUnfollow, return false (no objects changed)
+             */
+            if (!(user.get().getFollowingList().contains(sellerToUnfollow.get()))){ return false; }
+            /*
+             * remove userToUnfollow to the followingList of the user
+             * and remove user to the followersList of the userToUnfollow
+             */
+            user.get().getFollowingList().remove(sellerToUnfollow.get());
+            sellerToUnfollow.get().getFollowersList().remove(user.get());
+            userRepository.save(user.get());
+            sellerRepository.save(sellerToUnfollow.get());
+            return true;
+        }
+        return false;
     }
 }
