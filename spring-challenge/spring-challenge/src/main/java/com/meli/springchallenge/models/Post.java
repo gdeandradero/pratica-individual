@@ -26,6 +26,8 @@ public class Post implements Comparable<Post> {
     private Product detail;
     private Long category;
     private Double price;
+    private boolean hasPromo;
+    private Double discount;
 
     @Override
     public int compareTo(Post o) {

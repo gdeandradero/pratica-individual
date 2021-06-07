@@ -1,6 +1,8 @@
 package com.meli.springchallenge.service;
 
+import com.meli.springchallenge.dto.CountPromoDTO;
 import com.meli.springchallenge.dto.FollowingPostsDTO;
+import com.meli.springchallenge.dto.PromoListDTO;
 import com.meli.springchallenge.models.Post;
 import com.meli.springchallenge.models.Seller;
 import com.meli.springchallenge.models.User;
@@ -71,5 +73,54 @@ public class PostServiceImpl implements PostService{
         }
         FollowingPostsDTO followingPostsDTO = new FollowingPostsDTO(userId, posts);
         return followingPostsDTO;
+    }
+
+    /*
+     * US 0010
+     */
+    @Override
+    public boolean registerPromoPost(Post post) {
+        Optional<Seller> seller = sellerRepository.findById(post.getUserId());
+        if (!(seller.isPresent())){
+            return false;
+        }
+        postRepository.save(post);
+        return true;
+    }
+
+    /*
+     * US 0011
+     */
+    @Override
+    public CountPromoDTO countPromo(Long userId) {
+        Optional<Seller> seller = sellerRepository.findById(userId);
+        if (!(seller.isPresent())){
+            return new CountPromoDTO();
+        }
+        Long numberPromo = 0L;
+        for (Post post : postRepository.findAllByUserId(userId)){
+            if (post.isHasPromo()){
+                numberPromo++;
+            }
+        }
+        return new CountPromoDTO(seller.get().getId(), seller.get().getName(), numberPromo);
+    }
+
+    /*
+     * US 0012
+     */
+    @Override
+    public PromoListDTO promoList(Long userId) {
+        Optional<Seller> seller = sellerRepository.findById(userId);
+        if (!(seller.isPresent())){
+            return new PromoListDTO();
+        }
+        PromoListDTO promoListDTO = new PromoListDTO(seller.get().getId(), seller.get().getName(), new ArrayList<>());
+        for (Post post : postRepository.findAllByUserId(seller.get().getId())){
+            if (post.isHasPromo()){
+                promoListDTO.getPosts().add(post);
+            }
+        }
+        return promoListDTO;
     }
 }
