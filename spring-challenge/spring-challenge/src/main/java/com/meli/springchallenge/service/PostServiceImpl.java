@@ -12,6 +12,8 @@ import com.meli.springchallenge.repository.UserRepository;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,12 +30,17 @@ public class PostServiceImpl implements PostService{
     @Autowired
     UserRepository userRepository;
 
+    /*
+     * US 0005
+     */
     @Override
-    public void registerPost(Post post) {
+    public ResponseEntity<Void> registerPost(Post post) {
         Optional<Seller> seller = sellerRepository.findById(post.getUserId());
         if (seller.isPresent()) {
             postRepository.save(post);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /*
@@ -74,11 +81,13 @@ public class PostServiceImpl implements PostService{
      * US 0010
      */
     @Override
-    public void registerPromoPost(Post post) {
+    public ResponseEntity<Void> registerPromoPost(Post post) {
         Optional<Seller> seller = sellerRepository.findById(post.getUserId());
         if (seller.isPresent()){
             postRepository.save(post);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /*

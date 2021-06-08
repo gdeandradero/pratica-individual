@@ -4,11 +4,12 @@ import com.meli.springchallenge.dto.response.ResponseCountPromoDTO;
 import com.meli.springchallenge.dto.response.ResponseFollowingPostsDTO;
 import com.meli.springchallenge.dto.response.ResponsePromoListDTO;
 import com.meli.springchallenge.models.Post;
+import org.springframework.http.ResponseEntity;
 
 public interface PostService {
-    void registerPost(Post post);
+    ResponseEntity<Void> registerPost(Post post);
     ResponseFollowingPostsDTO followingPosts(Long userId, String order);
-    void registerPromoPost(Post post);
+    ResponseEntity<Void> registerPromoPost(Post post);
     ResponseCountPromoDTO countPromo(Long userId);
     ResponsePromoListDTO promoList(Long userId);
 }

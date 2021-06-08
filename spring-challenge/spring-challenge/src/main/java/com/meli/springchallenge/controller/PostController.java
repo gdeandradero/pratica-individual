@@ -25,8 +25,7 @@ public class PostController {
      */
     @PostMapping("/newpost")
     public ResponseEntity<Void> registerPost(@RequestBody @Valid RequestPostDTO requestPostDTO){
-        postService.registerPost(requestPostDTO.transferToObject());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return postService.registerPost(requestPostDTO.transferToObject());
     }
 
     /*
@@ -47,8 +46,7 @@ public class PostController {
      */
     @PostMapping("/newpromopost")
     public ResponseEntity<Void> registerPromoPost(@RequestBody @Valid RequestPromoPostDTO requestPromoPostDTO){
-        postService.registerPromoPost(requestPromoPostDTO.transferToObject());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return postService.registerPromoPost(requestPromoPostDTO.transferToObject());
     }
 
     /*
