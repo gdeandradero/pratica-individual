@@ -1,4 +1,4 @@
-package com.meli.springchallenge.dto;
+package com.meli.springchallenge.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,8 +14,8 @@ import java.util.List;
 /*
  * US 0004
  */
-public class FollowingListDTO {
+public class ResponseFollowingListDTO {
     private Long id;
     private String name;
-    private List<UserDTO> following;
+    private List<ResponseUserDTO> following;
 }

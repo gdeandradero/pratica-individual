@@ -1,6 +1,5 @@
-package com.meli.springchallenge.dto;
+package com.meli.springchallenge.dto.response;
 
-import com.meli.springchallenge.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +12,12 @@ import lombok.Setter;
 /*
  * used in US 0003, US 0004
  */
-public class UserDTO implements Comparable<UserDTO> {
+public class ResponseUserDTO implements Comparable<ResponseUserDTO> {
     private Long id;
     private String name;
 
     @Override
-    public int compareTo(UserDTO o) {
+    public int compareTo(ResponseUserDTO o) {
         return this.name.compareTo(o.name);
     }
 }

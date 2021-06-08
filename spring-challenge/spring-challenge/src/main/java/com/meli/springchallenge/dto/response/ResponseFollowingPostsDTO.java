@@ -1,4 +1,4 @@
-package com.meli.springchallenge.dto;
+package com.meli.springchallenge.dto.response;
 
 import com.meli.springchallenge.models.Post;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 /*
  * US 0006
  */
-public class FollowingPostsDTO {
+public class ResponseFollowingPostsDTO {
     private Long userId;
     private List<Post> posts;
 }

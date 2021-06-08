@@ -1,9 +1,9 @@
 package com.meli.springchallenge.service;
 
-import com.meli.springchallenge.dto.FollowersCountDTO;
-import com.meli.springchallenge.dto.FollowersListDTO;
-import com.meli.springchallenge.dto.FollowingListDTO;
-import com.meli.springchallenge.dto.UserDTO;
+import com.meli.springchallenge.dto.response.ResponseFollowersCountDTO;
+import com.meli.springchallenge.dto.response.ResponseFollowersListDTO;
+import com.meli.springchallenge.dto.response.ResponseFollowingListDTO;
+import com.meli.springchallenge.dto.response.ResponseUserDTO;
 import com.meli.springchallenge.models.Seller;
 import com.meli.springchallenge.models.User;
 import com.meli.springchallenge.repository.SellerRepository;
@@ -52,78 +52,78 @@ public class UserServiceImpl implements UserService {
      * US 0002 - followersCount
      */
     @Override
-    public FollowersCountDTO followersCount(Long sellerId) {
+    public ResponseFollowersCountDTO followersCount(Long sellerId) {
         Optional<Seller> seller = sellerRepository.findById(sellerId);
         if (seller.isPresent()){
-            FollowersCountDTO followersCountDTO = new FollowersCountDTO(seller.get().getId(), seller.get().getName(),
+            ResponseFollowersCountDTO responseFollowersCountDTO = new ResponseFollowersCountDTO(seller.get().getId(), seller.get().getName(),
                     (long) seller.get().getFollowersList().size());
-            return followersCountDTO;
+            return responseFollowersCountDTO;
         }
-        return new FollowersCountDTO();
+        return new ResponseFollowersCountDTO();
     }
 
     /*
      * US 0003 - followersList
      */
     @Override
-    public FollowersListDTO followersList(Long sellerId, String order) {
+    public ResponseFollowersListDTO followersList(Long sellerId, String order) {
         Optional<Seller> seller = sellerRepository.findById(sellerId);
         if (seller.isPresent()){
             /*
              * adding followersList to the DTO
              */
-            List<UserDTO> userDTOList = new ArrayList<>();
+            List<ResponseUserDTO> responseUserDTOList = new ArrayList<>();
             for (User u : seller.get().getFollowersList()){
-                UserDTO userDTO = new UserDTO(u.getId(), u.getName());
-                userDTOList.add(userDTO);
+                ResponseUserDTO responseUserDTO = new ResponseUserDTO(u.getId(), u.getName());
+                responseUserDTOList.add(responseUserDTO);
             }
             /*
              * doing DTO and returning
              */
-            FollowersListDTO followersListDTO = new FollowersListDTO(seller.get().getId(), seller.get().getName(),
-                    userDTOList);
+            ResponseFollowersListDTO responseFollowersListDTO = new ResponseFollowersListDTO(seller.get().getId(), seller.get().getName(),
+                    responseUserDTOList);
             if (order != null) {
                 if (order.toUpperCase().compareTo("NAME_ASC") == 0) {
-                    Collections.sort(followersListDTO.getFollowers());
+                    Collections.sort(responseFollowersListDTO.getFollowers());
                 } else if (order.toUpperCase().compareTo("NAME_DESC") == 0) {
-                    Collections.sort(followersListDTO.getFollowers(), Collections.reverseOrder());
+                    Collections.sort(responseFollowersListDTO.getFollowers(), Collections.reverseOrder());
                 }
             }
-            return followersListDTO;
+            return responseFollowersListDTO;
         }
-        return new FollowersListDTO();
+        return new ResponseFollowersListDTO();
     }
 
     /*
      * US 0004 - followingList
      */
     @Override
-    public FollowingListDTO followingList(Long userId, String order) {
+    public ResponseFollowingListDTO followingList(Long userId, String order) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()){
             /*
              * adding followingList to the DTO
              */
-            List<UserDTO> userDTOList = new ArrayList<>();
+            List<ResponseUserDTO> responseUserDTOList = new ArrayList<>();
             for (User u : user.get().getFollowingList()){
-                UserDTO userDTO = new UserDTO(u.getId(), u.getName());
-                userDTOList.add(userDTO);
+                ResponseUserDTO responseUserDTO = new ResponseUserDTO(u.getId(), u.getName());
+                responseUserDTOList.add(responseUserDTO);
             }
             /*
              * doing DTO and returning
              */
-            FollowingListDTO followingListDTO = new FollowingListDTO(user.get().getId(), user.get().getName(),
-                    userDTOList);
+            ResponseFollowingListDTO responseFollowingListDTO = new ResponseFollowingListDTO(user.get().getId(), user.get().getName(),
+                    responseUserDTOList);
             if (order != null) {
                 if (order.toUpperCase().compareTo("NAME_ASC") == 0) {
-                    Collections.sort(followingListDTO.getFollowing());
+                    Collections.sort(responseFollowingListDTO.getFollowing());
                 } else if (order.toUpperCase().compareTo("NAME_DESC") == 0) {
-                    Collections.sort(followingListDTO.getFollowing(), Collections.reverseOrder());
+                    Collections.sort(responseFollowingListDTO.getFollowing(), Collections.reverseOrder());
                 }
             }
-            return followingListDTO;
+            return responseFollowingListDTO;
         }
-        return new FollowingListDTO();
+        return new ResponseFollowingListDTO();
     }
 
     /*

@@ -1,19 +1,21 @@
-package com.meli.springchallenge.dto;
+package com.meli.springchallenge.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 /*
- * US 0002
+ * US 0003
  */
-public class FollowersCountDTO {
+public class ResponseFollowersListDTO {
     private Long id;
     private String name;
-    private Long followersNumber;
+    private List<ResponseUserDTO> followers;
 }

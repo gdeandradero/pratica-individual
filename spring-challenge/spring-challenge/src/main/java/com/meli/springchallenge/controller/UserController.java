@@ -1,12 +1,10 @@
 package com.meli.springchallenge.controller;
 
-import com.meli.springchallenge.dto.FollowersCountDTO;
-import com.meli.springchallenge.dto.FollowersListDTO;
-import com.meli.springchallenge.dto.FollowingListDTO;
+import com.meli.springchallenge.dto.response.ResponseFollowersCountDTO;
+import com.meli.springchallenge.dto.response.ResponseFollowersListDTO;
+import com.meli.springchallenge.dto.response.ResponseFollowingListDTO;
 import com.meli.springchallenge.dto.request.RequestSellerDTO;
 import com.meli.springchallenge.dto.request.RequestUserDTO;
-import com.meli.springchallenge.models.Seller;
-import com.meli.springchallenge.models.User;
 import com.meli.springchallenge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,38 +36,38 @@ public class UserController {
      * US 0002 - followersCount
      */
     @GetMapping("/{sellerId}/followers/count")
-    public ResponseEntity<FollowersCountDTO> followersCount(@PathVariable Long sellerId){
-        FollowersCountDTO followersCountDTO = userService.followersCount(sellerId);
-        if (followersCountDTO.getId() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followersCountDTO);
+    public ResponseEntity<ResponseFollowersCountDTO> followersCount(@PathVariable Long sellerId){
+        ResponseFollowersCountDTO responseFollowersCountDTO = userService.followersCount(sellerId);
+        if (responseFollowersCountDTO.getId() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseFollowersCountDTO);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(followersCountDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(responseFollowersCountDTO);
     }
 
     /*
      * US 0003 - followersList
      */
     @GetMapping("/{sellerId}/followers/list")
-    public ResponseEntity<FollowersListDTO> followersList(@PathVariable Long sellerId,
-                                                          @RequestParam(required = false) String order){
-        FollowersListDTO followersListDTO = userService.followersList(sellerId, order);
-        if (followersListDTO.getId() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followersListDTO);
+    public ResponseEntity<ResponseFollowersListDTO> followersList(@PathVariable Long sellerId,
+                                                                  @RequestParam(required = false) String order){
+        ResponseFollowersListDTO responseFollowersListDTO = userService.followersList(sellerId, order);
+        if (responseFollowersListDTO.getId() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseFollowersListDTO);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(followersListDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(responseFollowersListDTO);
     }
 
     /*
      * US 0004 - followingList
      */
     @GetMapping("/{userId}/following/list")
-    public ResponseEntity<FollowingListDTO> followingList(@PathVariable Long userId,
-                                                          @RequestParam(required = false) String order){
-        FollowingListDTO followingListDTO = userService.followingList(userId, order);
-        if (followingListDTO.getId() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followingListDTO);
+    public ResponseEntity<ResponseFollowingListDTO> followingList(@PathVariable Long userId,
+                                                                  @RequestParam(required = false) String order){
+        ResponseFollowingListDTO responseFollowingListDTO = userService.followingList(userId, order);
+        if (responseFollowingListDTO.getId() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseFollowingListDTO);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(followingListDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(responseFollowingListDTO);
     }
 
     /*

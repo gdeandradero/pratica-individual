@@ -1,8 +1,8 @@
 package com.meli.springchallenge.controller;
 
-import com.meli.springchallenge.dto.CountPromoDTO;
-import com.meli.springchallenge.dto.FollowingPostsDTO;
-import com.meli.springchallenge.dto.PromoListDTO;
+import com.meli.springchallenge.dto.response.ResponseCountPromoDTO;
+import com.meli.springchallenge.dto.response.ResponseFollowingPostsDTO;
+import com.meli.springchallenge.dto.response.ResponsePromoListDTO;
 import com.meli.springchallenge.dto.request.RequestPostDTO;
 import com.meli.springchallenge.dto.request.RequestPromoPostDTO;
 import com.meli.springchallenge.service.PostService;
@@ -33,13 +33,13 @@ public class PostController {
      * US 0006 - followingPosts
      */
     @GetMapping("/following/{userId}/list")
-    public ResponseEntity<FollowingPostsDTO> followingPosts(@PathVariable Long userId,
-                                                            @RequestParam(required = false) String order){
-        FollowingPostsDTO followingPostsDTO = postService.followingPosts(userId, order);
-        if (followingPostsDTO.getUserId() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(followingPostsDTO);
+    public ResponseEntity<ResponseFollowingPostsDTO> followingPosts(@PathVariable Long userId,
+                                                                    @RequestParam(required = false) String order){
+        ResponseFollowingPostsDTO responseFollowingPostsDTO = postService.followingPosts(userId, order);
+        if (responseFollowingPostsDTO.getUserId() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseFollowingPostsDTO);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(followingPostsDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(responseFollowingPostsDTO);
     }
 
     /*
@@ -55,24 +55,24 @@ public class PostController {
      * US 0011 - countPromo
      */
     @GetMapping("/{userId}/countPromo")
-    public ResponseEntity<CountPromoDTO> countPromo(@PathVariable Long userId){
-        CountPromoDTO countPromoDTO = postService.countPromo(userId);
-        if (countPromoDTO.getUserId() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(countPromoDTO);
+    public ResponseEntity<ResponseCountPromoDTO> countPromo(@PathVariable Long userId){
+        ResponseCountPromoDTO responseCountPromoDTO = postService.countPromo(userId);
+        if (responseCountPromoDTO.getUserId() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseCountPromoDTO);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(countPromoDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(responseCountPromoDTO);
     }
 
     /*
      * US 0012 - promoList
      */
     @GetMapping("/{userId}/list")
-    public ResponseEntity<PromoListDTO> promoList(@PathVariable Long userId){
-        PromoListDTO promoListDTO = postService.promoList(userId);
-        if (promoListDTO.getUserId() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(promoListDTO);
+    public ResponseEntity<ResponsePromoListDTO> promoList(@PathVariable Long userId){
+        ResponsePromoListDTO responsePromoListDTO = postService.promoList(userId);
+        if (responsePromoListDTO.getUserId() == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePromoListDTO);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(promoListDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(responsePromoListDTO);
     }
 
 }
