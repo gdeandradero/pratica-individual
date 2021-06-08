@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "d9da7bad-f2d6-4336-a3f3-fd6b94a5ba64",
+		"name": "Spring-Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "US 0001 - followUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/1/follow/7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1",
+						"follow",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0002 - followersCount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/3/followers/count",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"3",
+						"followers",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0003 - followersList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/3/followers/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"3",
+						"followers",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0003 / US 0008 - followersList (order asc)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/3/followers/list?order=name_asc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"3",
+						"followers",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0003 / US 0008 - followersList (order desc)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/3/followers/list?order=name_desc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"3",
+						"followers",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0004 - followingList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/3/following/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"3",
+						"following",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0004 / US 0008 - followingList (order asc)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/3/following/list?order=name_asc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"3",
+						"following",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0004 / US 0008 - followingList (order desc)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/3/following/list?order=name_desc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"3",
+						"following",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0005 - registerPost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 7,\n    \"date\" : \"03-06-2021\",\n    \"name\" : \"Cadeira Gamer\",\n    \"type\" : \"Gamer\",\n    \"brand\" : \"Racer\",\n    \"color\" : \"Red & Black\",\n    \"notes\" : \"Special Edition\",\n    \"category\" : 100,\n    \"price\" : 1500.50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/products/newpost",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"newpost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0006 - followingPosts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/following/1/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"following",
+						"1",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0006 / US 0009 - followingPosts (order asc)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/following/3/list?order=date_asc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"following",
+						"3",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "date_asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0006 / US 0009 - followingPosts (order desc)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/following/3/list?order=date_desc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"following",
+						"3",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "date_desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0007 - unfollowUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/1/unfollow/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1",
+						"unfollow",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0010 - registerPromoPost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 7,\n    \"date\" : \"03-06-2021\",\n    \"name\" : \"Cadeira Gamer\",\n    \"type\" : \"Gamer\",\n    \"brand\" : \"Racer\",\n    \"color\" : \"Red & Black\",\n    \"notes\" : \"Special Edition\",\n    \"category\" : \"100\",\n    \"price\" : 1500.50,\n    \"hasPromo\": true,\n    \"discount\": 0.25\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/products/newpromopost",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"newpromopost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0011 - countPromo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/3/countPromo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"3",
+						"countPromo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0012 - promoList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/7/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"7",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0013 - registerUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Barnabé\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/register/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"register",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 0014 - registerSeller",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Camarguinho\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/register/seller",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"register",
+						"seller"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
