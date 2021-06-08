@@ -1,4 +1,4 @@
-# pratica-individual
+# Spring Challenge
 
 # O projeto foi desenvolvido com base no documento "Req. técnicos funcionais - Desafio Spring.pdf"
 
