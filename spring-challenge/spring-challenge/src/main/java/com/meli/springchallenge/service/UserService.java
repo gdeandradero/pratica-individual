@@ -7,11 +7,11 @@ import com.meli.springchallenge.models.Seller;
 import com.meli.springchallenge.models.User;
 
 public interface UserService {
-    void registerUser(User user);
-    void registerSeller(Seller seller);
     boolean followUser(Long userId, Long userIdToFollow);
     FollowersCountDTO followersCount(Long sellerId);
     FollowersListDTO followersList(Long sellerId, String order);
     FollowingListDTO followingList(Long userId, String order);
     boolean unfollowUser(Long userId, Long userIdToUnfollow);
+    void registerUser(User user);
+    void registerSeller(Seller seller);
 }

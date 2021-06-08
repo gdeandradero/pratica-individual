@@ -3,12 +3,15 @@ package com.meli.springchallenge.controller;
 import com.meli.springchallenge.dto.CountPromoDTO;
 import com.meli.springchallenge.dto.FollowingPostsDTO;
 import com.meli.springchallenge.dto.PromoListDTO;
-import com.meli.springchallenge.models.Post;
+import com.meli.springchallenge.dto.request.RequestPostDTO;
+import com.meli.springchallenge.dto.request.RequestPromoPostDTO;
 import com.meli.springchallenge.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/products")
@@ -21,11 +24,8 @@ public class PostController {
      * US 0005 - registerPost
      */
     @PostMapping("/newpost")
-    public ResponseEntity<Void> registerPost(@RequestBody Post post){
-        boolean success = postService.registerPost(post);
-        if (success == false){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Void> registerPost(@RequestBody @Valid RequestPostDTO requestPostDTO){
+        postService.registerPost(requestPostDTO.transferToObject());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -46,11 +46,8 @@ public class PostController {
      * US 0010 - registerPromoPost
      */
     @PostMapping("/newpromopost")
-    public ResponseEntity<Void> registerPromoPost(@RequestBody Post post){
-        boolean success = postService.registerPromoPost(post);
-        if (success == false){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> registerPromoPost(@RequestBody @Valid RequestPromoPostDTO requestPromoPostDTO){
+        postService.registerPromoPost(requestPromoPostDTO.transferToObject());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

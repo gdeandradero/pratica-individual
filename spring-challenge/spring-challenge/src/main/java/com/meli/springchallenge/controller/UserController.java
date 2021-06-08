@@ -3,6 +3,8 @@ package com.meli.springchallenge.controller;
 import com.meli.springchallenge.dto.FollowersCountDTO;
 import com.meli.springchallenge.dto.FollowersListDTO;
 import com.meli.springchallenge.dto.FollowingListDTO;
+import com.meli.springchallenge.dto.request.RequestSellerDTO;
+import com.meli.springchallenge.dto.request.RequestUserDTO;
 import com.meli.springchallenge.models.Seller;
 import com.meli.springchallenge.models.User;
 import com.meli.springchallenge.service.UserService;
@@ -11,30 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
     UserService userService;
-
-    /*
-     * US 0000 - registerUser
-     */
-    @PostMapping("/register/user")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void registerUser(@RequestBody User user){
-        userService.registerUser(user);
-    }
-
-    /*
-     * US 0000 - registerSeller
-     */
-    @PostMapping("/register/seller")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void registerSeller(@RequestBody Seller seller){
-        userService.registerSeller(seller);
-    }
 
     /*
      * US 0001 - followUser
@@ -95,6 +81,24 @@ public class UserController {
         if (success == false){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    /*
+     * US 0013 - registerUser
+     */
+    @PostMapping("/register/user")
+    public ResponseEntity<Void> registerUser(@RequestBody @Valid RequestUserDTO requestUserDTO){
+        userService.registerUser(requestUserDTO.transferToObject());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    /*
+     * US 0014 - registerSeller
+     */
+    @PostMapping("/register/seller")
+    public ResponseEntity<Void> registerSeller(@RequestBody @Valid RequestSellerDTO requestSellerDTO){
+        userService.registerSeller(requestSellerDTO.transferToObject());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

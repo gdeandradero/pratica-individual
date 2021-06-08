@@ -32,13 +32,11 @@ public class PostServiceImpl implements PostService{
     UserRepository userRepository;
 
     @Override
-    public boolean registerPost(Post post) {
+    public void registerPost(Post post) {
         Optional<Seller> seller = sellerRepository.findById(post.getUserId());
-        if (!(seller.isPresent())){
-            return false;
+        if (seller.isPresent()) {
+            postRepository.save(post);
         }
-        postRepository.save(post);
-        return true;
     }
 
     /*
@@ -79,13 +77,11 @@ public class PostServiceImpl implements PostService{
      * US 0010
      */
     @Override
-    public boolean registerPromoPost(Post post) {
+    public void registerPromoPost(Post post) {
         Optional<Seller> seller = sellerRepository.findById(post.getUserId());
-        if (!(seller.isPresent())){
-            return false;
+        if (seller.isPresent()){
+            postRepository.save(post);
         }
-        postRepository.save(post);
-        return true;
     }
 
     /*

@@ -23,23 +23,6 @@ public class UserServiceImpl implements UserService {
     SellerRepository sellerRepository;
 
     /*
-     * US 0000 - registerUser
-     */
-    @Override
-    public void registerUser(User user) {
-        userRepository.save(user);
-    }
-
-    /*
-     * US 0000 - registerSeller
-     */
-    @Override
-    public void registerSeller(Seller seller) {
-        sellerRepository.save(seller);
-    }
-
-
-    /*
      * US 0001 - followUser
      * return true if the seller has been followed
      */
@@ -167,5 +150,21 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    /*
+     * US 0013 - registerUser
+     */
+    @Override
+    public void registerUser(User user) {
+        userRepository.save(user);
+    }
+
+    /*
+     * US 0014 - registerSeller
+     */
+    @Override
+    public void registerSeller(Seller seller) {
+        sellerRepository.save(seller);
     }
 }
